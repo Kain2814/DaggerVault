@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+/dnd-backend/node_modules/
+/dnd-monster-browser/node_modules/
+
+# Environment Variables
+.env
+.env.local
+
+# Build Outputs
+dist/
+build/
+
+# System Files
+.DS_Store
+Thumbs.db

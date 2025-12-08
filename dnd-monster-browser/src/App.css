@@ -1,0 +1,71 @@
+
+body, html, #root, .App {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  color: #f0f0f0;
+}
+
+/* 1. THE GLASS GRAIN TEXTURE (Essential for the look) */
+.glass-texture {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 10;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* 2. THE STAINED GLASS BACKGROUND (Sharp Shards) */
+.stained-glass-bg {
+  background-color: #000;
+  /* Complex gradients with HARD STOPS to create shapes, not blends */
+  background-image: 
+    linear-gradient(115deg, transparent 75%, rgba(138, 28, 28, 0.3) 75%),
+    linear-gradient(245deg, transparent 60%, rgba(60, 20, 140, 0.15) 60%),
+    linear-gradient(335deg, transparent 65%, rgba(197, 160, 89, 0.1) 65%),
+    conic-gradient(from 45deg at 50% 50%, #0a0a0a 0deg, #1a0505 150deg, #0a0a0a 240deg, #141414 360deg);
+  background-attachment: fixed;
+}
+
+/* 3. THE PANEL (The "Window" holding the content) */
+.stained-glass-panel {
+  background: rgba(10, 5, 5, 0.85); /* Very dark red/black */
+  backdrop-filter: blur(5px); /* Blurs what's behind it */
+  position: relative;
+  
+  /* THE LEAD BORDER EFFECT */
+  border: 4px solid #1a1a1a; /* Dark iron inner border */
+  outline: 1px solid #c5a059; /* Gold trim outer border */
+  box-shadow: 
+    0 0 0 4px #000, /* Simulated thick lead line */
+    0 10px 40px rgba(0,0,0,0.8);
+}
+
+/* Decorative corner pieces for the panel */
+.stained-glass-panel::after {
+  content: '';
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border: 1px solid rgba(138, 28, 28, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 4. TEXT GLOW */
+.glass-text {
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #c5a059;
+  text-shadow: 
+    2px 2px 0px #000, /* Hard shadow for "cut" look */
+    0 0 15px rgba(138, 28, 28, 0.6); /* Red glow */
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #3d0808; border: 1px solid #c5a059; }
+
