@@ -1,6 +1,6 @@
 const Campaign = require('../models/Campaign');
 const Note = require('../models/Note');
-const SavedAdversary = require('../models/SavedAdversary'); // <--- CRITICAL IMPORT
+const SavedAdversary = require('../models/savedAdversary');
 
 // --- CAMPAIGN FUNCTIONS ---
 

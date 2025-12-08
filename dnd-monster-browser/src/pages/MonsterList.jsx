@@ -13,6 +13,9 @@ import { useAuth } from '../context/AuthContext';
 function MonsterList() {
   const { user } = useAuth();
 
+// API Base URL
+  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   // Data States
   const [monsters, setMonsters] = useState([]); 
   const [savedMonsters, setSavedMonsters] = useState([]); 
@@ -29,7 +32,7 @@ function MonsterList() {
   // --- 1. FETCH PUBLIC MONSTERS ---
   const fetchPublicMonsters = (search = '', tier = '') => {
     setIsLoading(true);
-    let url = 'http://localhost:5000/api/reference?';
+    let url = `${BASE_URL}/api/reference?`;
     if (search) url += `search=${search}&`;
     if (tier && tier !== 'All') url += `tier=${tier}`;
 
@@ -48,7 +51,7 @@ function MonsterList() {
   // --- 2. FETCH SAVED MONSTERS ---
   const fetchSavedMonsters = () => {
       setIsLoading(true);
-      axios.get('http://localhost:5000/api/campaigns/user/all-monsters', {
+      axios.get(`${BASE_URL}/api/campaigns/user/all-monsters`, {
           headers: { Authorization: `Bearer ${user?.token}` }
       })
       .then(response => {
