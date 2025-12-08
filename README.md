@@ -33,3 +33,4 @@ A full-stack MERN application designed as a comprehensive companion for the Dagg
 ```bash
 git clone <YOUR_REPO_URL_HERE>
 cd daggerheart-vault
+**Dont forget to install npm**
