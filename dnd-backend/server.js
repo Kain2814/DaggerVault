@@ -5,19 +5,25 @@ const cors = require('cors');
 // 1. IMPORT ROUTE FILES
 const userRoutes = require('./routes/userRoutes');
 const adversaryRoutes = require('./routes/adversaryRoutes');
-const savedRoutes = require('./routes/savedRoutes');       // For "Save to Vault"
-const campaignRoutes = require('./routes/campaignRoutes'); // For "Campaigns"
+const campaignRoutes = require('./routes/campaignRoutes'); 
+
+// (Deleted 'savedRoutes' import because we don't use it anymore)
 
 const app = express();
-const PORT = 5000;
+
+// Use the port defined in the environment variables or default to 5000
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors()); 
 app.use(express.json()); 
 
 // Database Connection
-mongoose.connect('mongodb://127.0.0.1:27017/dnd_monsters')
-.then(() => console.log('✅ Connected to MongoDB via Compass!'))
+// Uses environment variable for Cloud MongoDB or defaults to local
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/dnd_monsters';
+
+mongoose.connect(MONGO_URI)
+.then(() => console.log('✅ Connected to MongoDB!'))
 .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
 // 2. USE ROUTES
@@ -32,7 +38,5 @@ app.get('/', (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
-
-
