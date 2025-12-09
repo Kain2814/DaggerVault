@@ -76,7 +76,8 @@ export function CampaignProvider({ children }) {
 
   const deleteNote = async (noteId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/campaigns/notes/${noteId}`, getConfig());
+      // FIXED: Use API_URL from context (which includes BASE_URL)
+      await axios.delete(`${API_URL}/notes/${noteId}`, getConfig());
       return true;
     } catch (err) {
       console.error("Error deleting note:", err);
@@ -86,7 +87,8 @@ export function CampaignProvider({ children }) {
 
   const updateNote = async (noteId, data) => {
     try {
-      await axios.put(`http://localhost:5000/api/campaigns/notes/${noteId}`, data, getConfig());
+      // FIXED: Use API_URL
+      await axios.put(`${API_URL}/notes/${noteId}`, data, getConfig());
       return true;
     } catch (err) {
       console.error("Error updating note:", err);

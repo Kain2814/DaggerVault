@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { 
   Container, Typography, Box, Card, CardContent, IconButton, 
-  Grid, Chip, Button, Divider, TextField, Modal, Stack, Avatar, ButtonGroup, Paper, Tab, Tabs
+  Grid, Chip, Button, Divider, TextField, Modal, Stack, Avatar, ButtonGroup
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -20,7 +20,7 @@ import TodayIcon from '@mui/icons-material/Today';
 import CircleIcon from '@mui/icons-material/Circle'; 
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied'; 
 import TokenIcon from '@mui/icons-material/Token'; 
-import PetsIcon from '@mui/icons-material/Pets'; // Icon for Monsters
+import PetsIcon from '@mui/icons-material/Pets'; 
 
 import { useCampaigns } from '../context/CampaignContext';
 import { useAuth } from '../context/AuthContext';
@@ -101,6 +101,7 @@ const HopeTracker = ({ value, onChange }) => {
     );
 };
 
+// --- NOTE DETAIL COMPONENT ---
 const NoteDetail = ({ note, onClose, onUpdate, onDelete, canEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState({ title: note.title, content: note.content, visibility: note.visibility });
@@ -154,7 +155,7 @@ const NoteDetail = ({ note, onClose, onUpdate, onDelete, canEdit }) => {
     );
 };
 
-// --- MONSTER CARD (Small version for List) ---
+// --- MONSTER CARD ---
 const MonsterCard = ({ monster, onDelete }) => (
     <Card sx={{ bgcolor: '#1a0924', border: '1px solid #d4af37', mb: 2 }}>
         <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 2 }}>
@@ -178,21 +179,19 @@ function CampaignDetail() {
   const { fetchCampaignDetails, currentCampaign, updateCampaignData, updateNote, deleteNote, fetchCampaignMonsters, deleteCampaignMonster } = useCampaigns();
   const { user } = useAuth();
 
-  // State
+  // Define Base URL for dynamic fetching
+  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   const [notes, setNotes] = useState([]);
-  const [monsters, setMonsters] = useState([]); // New Monster State
+  const [monsters, setMonsters] = useState([]); 
   const [selectedNote, setSelectedNote] = useState(null); 
   const [isAddingNote, setIsAddingNote] = useState(false);
   const [isAddingMember, setIsAddingMember] = useState(false); 
   
-  // Tab State
-  const [activeTab, setActiveTab] = useState('calendar'); // 'calendar' or 'monsters'
-
-  // Edit Campaign State
+  const [activeTab, setActiveTab] = useState('calendar');
   const [isEditingCampaign, setIsEditingCampaign] = useState(false);
   const [editCampaignData, setEditCampaignData] = useState({ title: '', description: '' });
 
-  // Calendar State
   const [view, setView] = useState('month'); 
   const [date, setDate] = useState(new Date()); 
 
@@ -216,7 +215,8 @@ function CampaignDetail() {
 
   const fetchNotes = async () => {
     try {
-        const res = await axios.get(`http://localhost:5000/api/campaigns/${id}/notes`, {
+        // FIXED: Use BASE_URL instead of localhost
+        const res = await axios.get(`${BASE_URL}/api/campaigns/${id}/notes`, {
             headers: { Authorization: `Bearer ${user?.token}` }
         });
         setNotes(res.data);
@@ -234,7 +234,6 @@ function CampaignDetail() {
 
   const isGM = currentCampaign.gm._id === user._id;
 
-  // --- HANDLERS ---
   const handleFearChange = (val) => updateCampaignData(id, { currentFear: val });
   const handleHopeChange = (val) => updateCampaignData(id, { currentHope: val });
 
@@ -262,7 +261,6 @@ function CampaignDetail() {
       setIsEditingCampaign(false);
   };
 
-  // --- CALENDAR HANDLERS ---
   const events = notes.map(note => ({
       title: note.title,
       start: new Date(note.realDate),
@@ -297,7 +295,8 @@ function CampaignDetail() {
   const handleCreateNote = async (e) => {
     e.preventDefault();
     try {
-        await axios.post(`http://localhost:5000/api/campaigns/${id}/notes`, {
+        // FIXED: Use BASE_URL
+        await axios.post(`${BASE_URL}/api/campaigns/${id}/notes`, {
             ...newNote,
             realDate: date 
         }, {
@@ -331,11 +330,10 @@ function CampaignDetail() {
   return (
     <Container maxWidth={false} sx={{ py: 4, px: { xs: 2, md: 4 } }}>
       
-      {/* 2. MAIN CONTENT GRID */}
       <Grid container spacing={4}>
         
         {/* LEFT COL: SIDEBAR */}
-        <Grid size={{ xs: 12, md: 3, lg: 2 }}>
+        <Grid item size={{ xs: 12, md: 3, lg: 2 }}>
             <Box sx={{ mb: 4 }}>
                 <Stack spacing={2}>
                     <HopeTracker value={currentCampaign.currentHope} onChange={handleHopeChange} isGM={isGM} />
@@ -416,31 +414,36 @@ function CampaignDetail() {
                 </CardContent>
             </Card>
 
-            {/* TAB SWITCHER (NEW) */}
-            <Stack spacing={1}>
-                <Button 
-                    variant={activeTab === 'calendar' ? 'contained' : 'outlined'} 
-                    onClick={() => setActiveTab('calendar')}
-                    sx={{ bgcolor: activeTab === 'calendar' ? '#d4af37' : 'transparent', color: activeTab === 'calendar' ? 'black' : '#d4af37', borderColor: '#d4af37' }}
-                >
-                    Calendar
-                </Button>
-                {isGM && (
-                    <Button 
-                        startIcon={<PetsIcon />}
-                        variant={activeTab === 'monsters' ? 'contained' : 'outlined'} 
-                        onClick={() => setActiveTab('monsters')}
-                        sx={{ bgcolor: activeTab === 'monsters' ? '#9c27b0' : 'transparent', color: activeTab === 'monsters' ? 'white' : '#9c27b0', borderColor: '#9c27b0' }}
-                    >
-                        Saved Monsters
-                    </Button>
-                )}
-            </Stack>
+            {isGM && (
+                <Box sx={{ mt: 2 }}>
+                    {activeTab === 'calendar' ? (
+                        <Button 
+                            fullWidth
+                            startIcon={<PetsIcon />}
+                            variant="outlined" 
+                            onClick={() => setActiveTab('monsters')}
+                            sx={{ color: '#9c27b0', borderColor: '#9c27b0', '&:hover': { bgcolor: 'rgba(156, 39, 176, 0.1)' } }}
+                        >
+                            View Saved Monsters
+                        </Button>
+                    ) : (
+                        <Button 
+                            fullWidth
+                            startIcon={<TodayIcon />}
+                            variant="outlined" 
+                            onClick={() => setActiveTab('calendar')}
+                            sx={{ color: '#d4af37', borderColor: '#d4af37', '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' } }}
+                        >
+                            Back to Calendar
+                        </Button>
+                    )}
+                </Box>
+            )}
 
         </Grid>
 
         {/* RIGHT COL: CONTENT AREA */}
-        <Grid size={{ xs: 12, md: 9, lg: 10 }}>
+        <Grid item size={{ xs: 12, md: 9, lg: 10 }}>
              
              {/* VIEW 1: CALENDAR */}
              {activeTab === 'calendar' && (
