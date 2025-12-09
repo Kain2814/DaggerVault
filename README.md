@@ -2,8 +2,8 @@
 
 A full-stack MERN application designed as a comprehensive companion for the Daggerheart TTRPG. This tool bridges the gap between a reference wiki and a campaign management suite, offering distinct tools for Game Masters (GMs) and Players.
 
-**🔴 Live Demo:** [Click Here to View App](https://YOUR_AMPLIFY_URL.amplifyapp.com)  
-**⚙️ Backend API:** [Hosted on Render](https://daggerheart-backend.onrender.com)
+**🔴 Live Demo:** [Click Here to View App](https://staging.d260dcah1gwpck.amplifyapp.com/)  
+**⚙️ Backend API:** [Hosted on Render](https://nexusvault.onrender.com)
 
 
 ## 🚀 Features
