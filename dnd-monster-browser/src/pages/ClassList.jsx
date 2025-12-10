@@ -1,75 +1,34 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Container, Typography, Card, Box, Chip, Button } from '@mui/material';
+import { Container, Typography, Card, Box, Chip, Button, CardMedia } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import BackgroundImg from '../assets/daggerheart_background.jpg'; 
 
+// --- CLASS ART ---
+import GuardianImg from '../assets/Guardian_drag.png';
+import RangerImg from '../assets/Ranger_frog.png';
+import WizardImg from '../assets/Wizard_book.png';
+
 function ClassList() {
   
-  // Updated list: Only Guardian, Ranger, and Wizard are active.
   const classes = [
-    // { 
-    //     name: "Bard", 
-    //     icon: "🎻", 
-    //     domain: "Codex & Splendor", 
-    //     desc: "Masters of captivation who weave magic through performance. Whether telling tales or singing songs, they thrive in social situations and bolster their allies.",
-    //     tags: ["Support", "Social"]
-    // },
-    // { 
-    //     name: "Druid", 
-    //     icon: "🦌", 
-    //     domain: "Sage & Arcana", 
-    //     desc: "Protectors of the wilderness who channel the untamed forces of nature. They can shape-shift into powerful beasts and command the elements.",
-    //     tags: ["Shape-shift", "Nature"]
-    // },
     { 
         name: "Guardian", 
-        icon: "🛡️", 
-        domain: "Valor & Blade", 
-        desc: "Unstoppable defenders known for their unshakeable fortitude. They fight with ferocity to protect their charges, answering any injury to an ally in kind.",
-        tags: ["Tank", "Defender"]
+        image: GuardianImg, 
+        desc: "Unstoppable armored protectors who stand between their allies and danger. They use strength and conviction to weather any blow.", 
+        tags: ["Tank", "Protection"] 
     },
     { 
         name: "Ranger", 
-        icon: "🏹", 
-        domain: "Bone & Sage", 
-        desc: "Sly tacticians and expert trackers who master the wilds. They often fight alongside a bonded animal companion and strike from the shadows.",
-        tags: ["Tracker", "Companion"]
+        image: RangerImg, 
+        desc: "Masters of the wild who track prey and strike from a distance. They are adaptable hunters at home in nature's harshest environments.", 
+        tags: ["Survival", "Ranged"] 
     },
-    // { 
-    //     name: "Rogue", 
-    //     icon: "🗡️", 
-    //     domain: "Midnight & Grace", 
-    //     desc: "Scoundrels who move through the world anonymously. Masters of stealth and trickery, they exploit weaknesses and strike when least expected.",
-    //     tags: ["Stealth", "Trickery"]
-    // },
-    // { 
-    //     name: "Seraph", 
-    //     icon: "🪽", 
-    //     domain: "Splendor & Valor", 
-    //     desc: "Divine fighters imbued with sacred purpose. Empowered by their faith, they soar over the battlefield to smite enemies and heal the wounded.",
-    //     tags: ["Flying", "Divine"]
-    // },
-    // { 
-    //     name: "Sorcerer", 
-    //     icon: "🔥", 
-    //     domain: "Arcana & Midnight", 
-    //     desc: "Conduits of volatile, innate magic passed down through bloodlines. They channel raw elemental power or primal forces to transform the battlefield.",
-    //     tags: ["Magic", "Blaster"]
-    // },
-    // { 
-    //     name: "Warrior", 
-    //     icon: "⚔️", 
-    //     domain: "Blade & Bone", 
-    //     desc: "Masters of weapons and violence honed by a lifetime of training. They dominate close-quarters combat with unmatched skill and agility.",
-    //     tags: ["Melee", "Tactics"]
-    // },
     { 
         name: "Wizard", 
-        icon: "🔮", 
-        domain: "Codex & Arcana", 
-        desc: "Scholars of the arcane who have mastered magic through intense study. They wield versatile spells to solve problems and crush their foes.",
-        tags: ["Utility", "Spells"]
+        image: WizardImg, 
+        desc: "Scholars of the arcane who shape reality with powerful spells. Their knowledge of magic allows them to control the battlefield.", 
+        tags: ["Magic", "Intelligence"] 
     }
   ];
 
@@ -89,115 +48,113 @@ function ClassList() {
           Choose Your Class
         </Typography>
         <Typography variant="h5" align="center" sx={{ color: '#b39ddb', mb: 8, fontWeight: 300 }}>
-          Define your role on the battlefield.
+          Select the path that defines your power.
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={4} justifyContent="center">
           {classes.map((cls, index) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
               <Card 
-                component={RouterLink}
+                component={RouterLink} 
                 to={`/classes/${cls.name.toLowerCase()}`}
                 sx={{ 
-                  height: 300, 
+                  height: 500,  
                   position: 'relative',
-                  bgcolor: 'rgba(30, 10, 40, 0.6)', 
+                  bgcolor: 'black', 
                   border: '1px solid #5e35b1',
                   borderRadius: 4,
                   overflow: 'hidden',
                   textDecoration: 'none',
+                  display: 'flex',        
+                  flexDirection: 'column', 
                   transition: 'all 0.3s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  pt: 4,
                   '&:hover': { 
                     borderColor: '#d4af37', 
-                    boxShadow: '0 0 25px rgba(212, 175, 55, 0.3)',
-                    transform: 'translateY(-5px)'
+                    transform: 'translateY(-5px)',
+                    boxShadow: '0 0 25px rgba(212, 175, 55, 0.3)'
                   },
-                  '&:hover .description-overlay': {
+                  // ON HOVER: Shrink image height
+                  '&:hover .class-img': {
+                    height: '40%' 
+                  },
+                  // ON HOVER: Hide Title Overlay
+                  '&:hover .title-overlay': {
+                    opacity: 0
+                  },
+                  // ON HOVER: Show content box
+                  '&:hover .content-box': {
+                    height: '60%',
                     opacity: 1,
-                    transform: 'translateY(0)',
-                  },
-                  '&:hover .class-icon': {
-                    opacity: 0.2, 
-                    transform: 'scale(1.2)'
+                    padding: '24px'
                   }
                 }}
               >
-                {/* 1. TITLE (Stays visible) */}
-                <Typography 
-                    variant="h4" 
-                    sx={{ 
-                        fontFamily: 'Cinzel', 
-                        color: '#fff', 
-                        letterSpacing: '2px',
-                        zIndex: 2, 
-                        textShadow: '0 2px 5px rgba(0,0,0,0.8)'
+                {/* 1. ARTWORK */}
+                <CardMedia 
+                    component="img"
+                    image={cls.image}
+                    alt={cls.name}
+                    className="class-img"
+                    sx={{
+                        height: '100%', 
+                        width: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'top center', 
+                        transition: 'height 0.4s ease' 
                     }}
-                >
-                    {cls.name}
-                </Typography>
+                />
 
-                {/* 2. ICON (Background) */}
+                {/* 2. TITLE OVERLAY */}
                 <Box 
-                    className="class-icon"
+                    className="title-overlay"
                     sx={{ 
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)', 
-                        transition: 'all 0.4s ease',
-                        zIndex: 1,
+                        position: 'absolute', 
+                        bottom: 0, 
+                        left: 0, 
+                        width: '100%', 
+                        background: 'linear-gradient(to top, rgba(0,0,0,1) 30%, transparent)',
+                        pt: 8, pb: 3,
+                        textAlign: 'center',
+                        transition: 'opacity 0.2s ease'
                     }}
                 >
-                    <Typography variant="h1" sx={{ fontSize: '8rem', opacity: 0.8 }}>
-                        {cls.icon}
+                    <Typography variant="h3" sx={{ fontFamily: 'Cinzel', color: '#fff', textShadow: '0 2px 10px black' }}>
+                        {cls.name}
                     </Typography>
                 </Box>
 
-                {/* 3. DESCRIPTION OVERLAY (Slide up on hover) */}
+                {/* 3. CONTENT BOX */}
                 <Box 
-                    className="description-overlay"
+                    className="content-box"
                     sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        width: '100%',
-                        background: 'linear-gradient(to top, rgba(15, 5, 24, 1) 10%, rgba(15, 5, 24, 0.8) 80%, transparent 100%)',
-                        padding: '20px',
-                        paddingTop: '40px',
+                        height: 0,          
+                        opacity: 0,         
+                        bgcolor: '#1a0520', 
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        opacity: 0, 
-                        transform: 'translateY(20px)',
-                        transition: 'all 0.3s ease-in-out',
-                        zIndex: 3
+                        alignItems: 'center',    
+                        justifyContent: 'center',
+                        textAlign: 'center',     
+                        overflow: 'hidden',      
+                        transition: 'all 0.4s ease' 
                     }}
                 >
-                    <Chip 
-                        label={cls.domain} 
-                        size="small" 
-                        sx={{ mb: 2, bgcolor: '#d4af37', color: 'black', fontWeight: 'bold' }} 
-                    />
-                    <Typography variant="body1" align="center" sx={{ color: '#e0e0e0', mb: 2, lineHeight: 1.4, fontSize: '0.95rem' }}>
+                    <Typography variant="h4" sx={{ fontFamily: 'Cinzel', color: '#d4af37', mb: 1 }}>
+                        {cls.name}
+                    </Typography>
+                    
+                    <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mb: 2 }}>
+                        {cls.tags.map(tag => (
+                            <Chip key={tag} label={tag} size="small" sx={{ bgcolor: '#6200ea', color: 'white' }} />
+                        ))}
+                    </Box>
+
+                    <Typography variant="body1" sx={{ color: '#e0e0e0', lineHeight: 1.5, mb: 2, px: 2 }}>
                         {cls.desc}
                     </Typography>
                     
-                    <Button 
-                        variant="outlined" 
-                        size="small"
-                        sx={{ 
-                            color: '#d4af37', 
-                            borderColor: '#d4af37',
-                            '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' }
-                        }}
-                    >
-                        View More
+                    <Button variant="outlined" size="small" sx={{ color: '#d4af37', borderColor: '#d4af37' }}>
+                        View Details
                     </Button>
                 </Box>
 

@@ -5,21 +5,27 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // <--- NEW: Start as loading
   
   // Dynamic URL based on environment
   const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   // 1. Check for logged-in user on load
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Failed to parse user data", error);
-        localStorage.removeItem('user'); // Clean up bad data
-      }
-    }
+    const checkUser = async () => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          try {
+            setUser(JSON.parse(storedUser));
+          } catch (error) {
+            console.error("Failed to parse user data", error);
+            localStorage.removeItem('user'); 
+          }
+        }
+        setLoading(false); // <--- NEW: Done checking!
+    };
+    
+    checkUser();
   }, []);
 
   // 2. Register
@@ -31,7 +37,6 @@ export function AuthProvider({ children }) {
         password,
       });
       
-      // Save data + token
       if (response.data && response.data.token) {
         localStorage.setItem('user', JSON.stringify(response.data));
         setUser(response.data);
@@ -78,7 +83,6 @@ export function AuthProvider({ children }) {
         };
         const response = await axios.put(`${BASE_URL}/api/users/profile`, userData, config);
         
-        // Update local state and local storage
         setUser(response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
         return { success: true };
@@ -88,7 +92,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, loading, register, login, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );

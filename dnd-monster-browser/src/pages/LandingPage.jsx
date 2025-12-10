@@ -1,285 +1,212 @@
 import React from 'react';
+import { Container, Typography, Button, Box, Grid, Card, CardContent, CardMedia } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Container, Typography, Button, Box, Card, CardContent, CardMedia, Paper, TextField, Stack
-} from '@mui/material';
-import Grid from '@mui/material/Grid';
-
-// --- ASSETS ---
-import DaggerheartLogo from '../assets/Daggerheart_Logo.jpeg'; 
 import BackgroundImg from '../assets/daggerheart_background.jpg'; 
 
+// --- LANDING PAGE ART ---
+import AncestryArt from '../assets/Ancestry_LP_Fairie.png';
+import ClassArt from '../assets/Classes_LP_Katia.png';
+import AdversaryArt from '../assets/Adversary_LP_Mush.png';
+
 function LandingPage() {
-  
   return (
-    <Box 
-        sx={{ 
-            minHeight: '100vh', 
-            pb: 12,
-            backgroundImage: `
-                linear-gradient(to bottom, rgba(15, 5, 24, 0.85), rgba(15, 5, 24, 0.95)),
-                url(${BackgroundImg})
-            `,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            backgroundAttachment: 'fixed',
-            color: 'white'
-        }}
+    <Box
+      sx={{
+        // GLOBAL BACKGROUND: Fixed so it scrolls "behind" everything
+        minHeight: '100vh',
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(${BackgroundImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed', 
+        color: 'white'
+      }}
     >
-      
-      {/* --- 1. HERO SECTION --- */}
-      <Container maxWidth="xl" sx={{ pt: 15, pb: 10 }}>
-        <Box 
-            sx={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center', 
-              textAlign: 'center',
-              maxWidth: '900px', 
-              mx: 'auto' 
-            }}
-        >
-            <Typography variant="h6" sx={{ color: '#d4af37', letterSpacing: '2px', fontWeight: 'bold', textTransform: 'uppercase', mb: 1 }}>
-              The Official Companion For
+      {/* 1. HERO SECTION */}
+      <Box
+        sx={{
+          height: '80vh', 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          px: 2
+        }}
+      >
+        <Container maxWidth="md">
+            {/* Logo Removed as requested */}
+            
+            <Typography variant="h2" component="h1" gutterBottom sx={{ fontFamily: 'Cinzel', fontWeight: 'bold', textShadow: '0px 0px 10px black', mb: 2 }}>
+                Welcome to the Vault
             </Typography>
-            <Typography variant="h1" sx={{ fontSize: { xs: '3.5rem', md: '6rem' }, fontWeight: 900, mb: 2, color: '#fff' }}>
-              DAGGERHEART
+            
+            <Typography variant="h5" sx={{ mb: 6, color: '#e0e0e0', fontWeight: 300, textShadow: '0 2px 5px black' }}>
+                The ultimate companion for Daggerheart game masters and players. Manage campaigns, track sessions, and browse the archives.
             </Typography>
-            <Typography variant="h5" sx={{ mb: 6, color: '#b39ddb', lineHeight: 1.6, fontWeight: 300 }}>
-              Build your legend, track your campaigns, and master the Duality of Hope and Fear in this collaborative fantasy RPG.
-            </Typography>
+            
+            <Button 
+                component={RouterLink} 
+                to="/campaigns" 
+                variant="contained" 
+                size="large" 
+                sx={{ 
+                    bgcolor: '#d4af37', 
+                    color: 'black', 
+                    fontWeight: 'bold', 
+                    fontSize: '1.2rem', 
+                    py: 1.5, px: 5, 
+                    boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                    '&:hover': { bgcolor: '#b3912b' } 
+                }}
+            >
+                Enter the Vault
+            </Button>
+        </Container>
+      </Box>
 
-            <Stack direction="row" spacing={3}>
-                <Button component={RouterLink} to="/register" variant="contained" size="large" sx={{ bgcolor: '#d4af37', color: 'black', fontWeight: 'bold', px: 5, fontSize: '1.1rem' }}>
-                    Start Your Journey
-                </Button>
-                <Button component={RouterLink} to="/monsters" variant="outlined" size="large" sx={{ color: '#fff', borderColor: '#fff', px: 5, fontSize: '1.1rem' }}>
-                    Browse Bestiary
-                </Button>
-            </Stack>
-        </Box>
-      </Container>
-
-      {/* --- 2. STATS BAR --- */}
-      <Box sx={{ borderTop: '1px solid #333', borderBottom: '1px solid #333', bgcolor: 'rgba(0,0,0,0.6)', py: 4 }}>
-        <Container maxWidth="lg">
-            <Grid container spacing={4} textAlign="center" justifyContent="center">
-                <Grid item xs={12} sm={4}>
-                    <Typography variant="h3" sx={{ color: '#d4af37', fontWeight: 'bold' }}>300+</Typography>
-                    <Typography variant="subtitle1" sx={{ color: '#b39ddb', letterSpacing: '1px' }}>ADVERSARIES</Typography>
+      {/* 2. CAMPAIGN VAULT SECTION */}
+      {/* Using rgba for background allows the fixed image to show through slightly */}
+      <Box sx={{ py: 10, bgcolor: 'rgba(26, 9, 36, 0.9)', borderTop: '2px solid #d4af37', borderBottom: '2px solid #d4af37' }}>
+        <Container maxWidth="md" sx={{ textAlign: 'center' }}>
+            <Typography variant="h3" sx={{ fontFamily: 'Cinzel', color: '#d4af37', mb: 3 }}>
+                Campaign Management
+            </Typography>
+            <Typography variant="h6" sx={{ color: '#ccc', mb: 5, lineHeight: 1.6 }}>
+                Keep your adventures organized. Track session notes, manage Fear & Hope tokens, and maintain a calendar of your party's journey.
+            </Typography>
+            <Grid container spacing={4} justifyContent="center">
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 3, border: '1px solid #5e35b1', borderRadius: 2, bgcolor: 'rgba(0,0,0,0.5)' }}>
+                        <Typography variant="h5" sx={{ color: '#fff', mb: 1 }}>Session Notes</Typography>
+                        <Typography variant="body2" sx={{ color: '#aaa' }}>Private and public logs for every session.</Typography>
+                    </Box>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Typography variant="h3" sx={{ color: '#d4af37', fontWeight: 'bold' }}>15</Typography>
-                    <Typography variant="subtitle1" sx={{ color: '#b39ddb', letterSpacing: '1px' }}>ANCESTRIES</Typography>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 3, border: '1px solid #5e35b1', borderRadius: 2, bgcolor: 'rgba(0,0,0,0.5)' }}>
+                        <Typography variant="h5" sx={{ color: '#fff', mb: 1 }}>Token Tracker</Typography>
+                        <Typography variant="body2" sx={{ color: '#aaa' }}>Visual trackers for GM Fear and Party Hope.</Typography>
+                    </Box>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Typography variant="h3" sx={{ color: '#d4af37', fontWeight: 'bold' }}>9</Typography>
-                    <Typography variant="subtitle1" sx={{ color: '#b39ddb', letterSpacing: '1px' }}>CLASSES</Typography>
+                <Grid item xs={12} md={4}>
+                    <Box sx={{ p: 3, border: '1px solid #5e35b1', borderRadius: 2, bgcolor: 'rgba(0,0,0,0.5)' }}>
+                        <Typography variant="h5" sx={{ color: '#fff', mb: 1 }}>Calendar</Typography>
+                        <Typography variant="body2" sx={{ color: '#aaa' }}>Interactive timeline of your campaign events.</Typography>
+                    </Box>
                 </Grid>
             </Grid>
         </Container>
       </Box>
 
-      {/* --- 3. WHAT IS DAGGERHEART --- */}
-      <Container maxWidth="lg" sx={{ py: 12 }}>
-        <Paper 
-            elevation={0} 
-            sx={{ 
-                p: { xs: 4, md: 8 }, 
-                borderRadius: 4, 
-                bgcolor: 'rgba(30, 10, 40, 0.6)', 
-                backdropFilter: 'blur(10px)',
-                border: '1px solid #5e35b1',
-                textAlign: 'center' 
-            }}
-        >
-           <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>
-             What is Daggerheart?
-           </Typography>
-           <Typography variant="body1" paragraph sx={{ fontSize: '1.2rem', lineHeight: 1.8, color: '#e0e0e0', maxWidth: '800px', mx: 'auto' }}>
-             Daggerheart is a collaborative fantasy roleplaying game of incredible magic and heroic adventure. 
-             The core mechanic is the <strong style={{ color: '#d4af37' }}>Duality Dice</strong> system (2d12) which represents the conflict between Hope and Fear.
-           </Typography>
-           <Typography variant="body1" sx={{ fontSize: '1.2rem', lineHeight: 1.8, color: '#b39ddb', maxWidth: '800px', mx: 'auto' }}>
-             Whether you are investigating an assassination plot or delving into ancient dungeons, 
-             the story you tell is built on the choices you make.
-           </Typography>
-        </Paper>
-      </Container>
-
-      {/* --- 4. GAME FEATURES (Ancestries, Classes, Adversaries) --- */}
-      <Container maxWidth="lg" sx={{ pb: 12 }}>
-        
-        {/* A. ANCESTRIES */}
-        <Box sx={{ mb: 12, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Container maxWidth="md"> 
-                <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>Choose Your Ancestry</Typography>
-                <Typography paragraph sx={{ fontSize: '1.1rem', color: '#b0bec5', lineHeight: 1.8, mb: 4, maxWidth: '700px', mx: 'auto' }}>
-                    From the noble <strong>Ribbet</strong> to the fungus-folk <strong>Fungril</strong>, Daggerheart offers a diverse array of ancestries. 
-                </Typography>
-                <Paper sx={{ 
-                    height: 350, 
-                    width: '100%', maxWidth: '600px', 
-                    bgcolor: 'rgba(36, 10, 48, 0.6)', 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                    border: '1px dashed #5e35b1', borderRadius: 4, mx: 'auto', mb: 4
-                }}>
-                    <Typography variant="h6" color="secondary" sx={{ opacity: 0.7 }}>[Ancestry Art Placeholder]</Typography>
-                </Paper>
-                <Button component={RouterLink} to="/ancestries" variant="outlined" size="large" sx={{ color: '#d4af37', borderColor: '#d4af37', px: 5 }}>
-                    Explore Ancestries
-                </Button>
-            </Container>
-        </Box>
-
-        {/* B. CLASSES */}
-        <Box sx={{ mb: 12, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Container maxWidth="md">
-                <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>Define Your Class</Typography>
-                <Typography paragraph sx={{ fontSize: '1.1rem', color: '#b0bec5', lineHeight: 1.8, mb: 4, maxWidth: '700px', mx: 'auto' }}>
-                    Will you protect your allies as a <strong>Guardian</strong>, or weave magic as a <strong>Seraph</strong>?
-                    Select your class and build your loadout from hundreds of ability cards.
-                </Typography>
-                <Paper sx={{ 
-                    height: 350, 
-                    width: '100%', maxWidth: '600px', 
-                    bgcolor: 'rgba(36, 10, 48, 0.6)', 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                    border: '1px dashed #5e35b1', borderRadius: 4, mx: 'auto', mb: 4
-                }}>
-                    <Typography variant="h6" color="secondary" sx={{ opacity: 0.7 }}>[Class Art Placeholder]</Typography>
-                </Paper>
-                <Button component={RouterLink} to="/classes" variant="outlined" size="large" sx={{ color: '#d4af37', borderColor: '#d4af37', px: 5 }}>
-                    View Classes
-                </Button>
-            </Container>
-        </Box>
-
-        {/* C. ADVERSARIES (The Bestiary Section) */}
-        <Box sx={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Container maxWidth="md">
-                <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>Master the Bestiary</Typography>
-                <Typography paragraph sx={{ fontSize: '1.1rem', color: '#b0bec5', lineHeight: 1.8, mb: 4, maxWidth: '700px', mx: 'auto' }}>
-                    From the depths of the Witherwild to the peaks of the high mountains, this vault houses detailed stats for every adversary in the <strong>Daggerheart Core Set</strong>. 
-                </Typography>
-                <Paper sx={{ 
-                    height: 350, 
-                    width: '100%', maxWidth: '600px', 
-                    bgcolor: 'rgba(36, 10, 48, 0.6)', 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                    border: '1px dashed #5e35b1', borderRadius: 4, mx: 'auto', mb: 4
-                }}>
-                    <Typography variant="h6" color="secondary" sx={{ opacity: 0.7 }}>[Adversary Art Placeholder]</Typography>
-                </Paper>
-                <Button component={RouterLink} to="/monsters" variant="outlined" size="large" sx={{ color: '#d4af37', borderColor: '#d4af37', px: 5 }}>
-                    Browse Adversaries
-                </Button>
-            </Container>
-        </Box>
-
-      </Container>
-
-      {/* --- 5. THE CAMPAIGN VAULT (Moved Here!) --- */}
-      <Container maxWidth="lg" sx={{ py: 12, borderTop: '1px solid #333' }}>
-        <Paper 
-            elevation={0} 
-            sx={{ 
-                p: { xs: 4, md: 8 }, 
-                borderRadius: 4, 
-                bgcolor: 'rgba(20, 10, 30, 0.8)', 
-                border: '1px solid #d4af37',
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                alignItems: 'center',
-                gap: 6
-            }}
-        >
-           {/* Left: Text Description */}
-           <Box sx={{ flex: 1 }}>
-               <Typography variant="overline" sx={{ color: '#9c27b0', letterSpacing: '2px', fontWeight: 'bold' }}>
-                   Manage Your Game
-               </Typography>
-               <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff', mt: 1 }}>
-                 The Campaign Vault
-               </Typography>
-               <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8, color: '#e0e0e0', mb: 3 }}>
-                 Keep your adventures organized with a dedicated digital workspace built for both sides of the screen.
-               </Typography>
-               
-               <Grid container spacing={4}>
-                   <Grid item xs={12} sm={6}>
-                       <Typography variant="h6" sx={{ color: '#d4af37', mb: 1 }}>For Game Masters</Typography>
-                       <Typography variant="body2" sx={{ color: '#b39ddb' }}>
-                           Track Fear, manage private session notes, organize NPCs, and curate a custom list of saved adversaries for your next encounter.
-                       </Typography>
-                   </Grid>
-                   <Grid item xs={12} sm={6}>
-                       <Typography variant="h6" sx={{ color: '#d4af37', mb: 1 }}>For Players</Typography>
-                       <Typography variant="body2" sx={{ color: '#b39ddb' }}>
-                           Track Hope, log campaign lore in the shared calendar, and keep a history of your party's legendary deeds.
-                       </Typography>
-                   </Grid>
-               </Grid>
-
-               <Button 
-                   component={RouterLink} 
-                   to="/campaigns" 
-                   variant="contained" 
-                   size="large" 
-                   sx={{ mt: 4, bgcolor: '#9c27b0', color: 'white', fontWeight: 'bold' }}
-               >
-                   Open Your Vault
-               </Button>
-           </Box>
-
-           {/* Right: Visual Abstract */}
-           <Box sx={{ flex: 1, textAlign: 'center', display: { xs: 'none', md: 'block' } }}>
-                <Typography variant="h1" sx={{ fontSize: '10rem' }}>🗓️</Typography>
-           </Box>
-        </Paper>
-      </Container>
-
-      {/* --- 6. BOTTOM CARDS (Community & Learn) --- */}
-      <Box sx={{ bgcolor: 'rgba(18, 4, 28, 0.8)', py: 12, borderTop: '1px solid #333' }}>
+      {/* 3. EXPLORE ARCHIVES */}
+      <Box sx={{ py: 10, bgcolor: 'rgba(15, 5, 24, 0.9)' }}>
         <Container maxWidth="lg">
-            <Typography variant="h3" align="center" gutterBottom sx={{ mb: 6, fontFamily: 'Cinzel', color: '#d4af37' }}>
-                Join the Community
+            <Typography variant="h3" align="center" sx={{ fontFamily: 'Cinzel', color: '#d4af37', mb: 8 }}>
+                Explore the Archives
             </Typography>
-            <Grid container spacing={4} justifyContent="center">
-                <Grid item xs={12} md={6}>
-                    <Card sx={{ height: '100%', bgcolor: '#1f0a29', border: '1px solid #333' }}>
-                        <CardContent sx={{ textAlign: 'center', py: 5 }}>
-                            <Typography variant="h5" sx={{ color: '#fff', mb: 2, fontFamily: 'Cinzel' }}>Community Hub</Typography>
-                            <Typography sx={{ color: '#b0bec5', mb: 3 }}>
-                                Share homebrew monsters, discuss rules with other GMs, and find a group to start your adventure.
+            
+            <Grid container spacing={6} justifyContent="center">
+                
+                {/* CARD 1: ANCESTRIES */}
+                <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', bgcolor: '#1a0924', border: '1px solid #5e35b1', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 0 20px #9c27b0' } }}>
+                        <CardMedia
+                            component="img"
+                            height="250"
+                            image={AncestryArt}
+                            alt="Ancestries"
+                            sx={{ objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                        <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                            <Typography variant="h4" sx={{ fontFamily: 'Cinzel', color: '#fff', mb: 2 }}>Ancestries</Typography>
+                            <Typography variant="body1" sx={{ color: '#ccc', mb: 3 }}>
+                                Discover the diverse lineages of the world.
                             </Typography>
-                            <Button variant="text" disabled sx={{ color: '#5e35b1' }}>Coming Soon</Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Card sx={{ height: '100%', bgcolor: '#1f0a29', border: '1px solid #333' }}>
-                        <CardContent sx={{ textAlign: 'center', py: 5 }}>
-                            <Typography variant="h5" sx={{ color: '#fff', mb: 2, fontFamily: 'Cinzel' }}>Learn to Play</Typography>
-                            <Typography sx={{ color: '#b0bec5', mb: 3 }}>
-                                Watch official tutorials and learn the 2d12 Duality system from the creators.
-                            </Typography>
-                            <Button 
-                                component="a" 
-                                href="https://www.youtube.com/playlist?list=PL1tiwbzkOjQyM3X879m4z0x6gqJgB6yB2" 
-                                target="_blank" 
-                                variant="outlined" 
-                                sx={{ color: '#d4af37', borderColor: '#d4af37' }}
-                            >
-                                Watch Videos
+                            <Button component={RouterLink} to="/ancestries" variant="outlined" sx={{ color: '#d4af37', borderColor: '#d4af37' }}>
+                                View Lineages
                             </Button>
                         </CardContent>
                     </Card>
                 </Grid>
+
+                {/* CARD 2: CLASSES */}
+                <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', bgcolor: '#1a0924', border: '1px solid #5e35b1', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 0 20px #9c27b0' } }}>
+                        <CardMedia
+                            component="img"
+                            height="250"
+                            image={ClassArt}
+                            alt="Classes"
+                            sx={{ objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                        <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                            <Typography variant="h4" sx={{ fontFamily: 'Cinzel', color: '#fff', mb: 2 }}>Classes</Typography>
+                            <Typography variant="body1" sx={{ color: '#ccc', mb: 3 }}>
+                                Master your destiny. Explore the paths.
+                            </Typography>
+                            <Button component={RouterLink} to="/classes" variant="outlined" sx={{ color: '#d4af37', borderColor: '#d4af37' }}>
+                                View Classes
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+
+                {/* CARD 3: BESTIARY */}
+                <Grid item xs={12} md={4}>
+                    <Card sx={{ height: '100%', bgcolor: '#1a0924', border: '1px solid #5e35b1', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 0 20px #9c27b0' } }}>
+                        <CardMedia
+                            component="img"
+                            height="250"
+                            image={AdversaryArt}
+                            alt="Adversaries"
+                            sx={{ objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                        <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                            <Typography variant="h4" sx={{ fontFamily: 'Cinzel', color: '#fff', mb: 2 }}>Bestiary</Typography>
+                            <Typography variant="body1" sx={{ color: '#ccc', mb: 3 }}>
+                                Browse our compendium of adversaries.
+                            </Typography>
+                            <Button component={RouterLink} to="/monsters" variant="outlined" sx={{ color: '#d4af37', borderColor: '#d4af37' }}>
+                                Open Bestiary
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+
             </Grid>
         </Container>
       </Box>
 
+      {/* 4. COMING SOON SECTION */}
+      <Box sx={{ py: 8, bgcolor: 'rgba(0,0,0,0.9)', textAlign: 'center' }}>
+        <Container maxWidth="md">
+            <Typography variant="h4" sx={{ fontFamily: 'Cinzel', color: '#777', mb: 4 }}>
+                Coming Soon
+            </Typography>
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item>
+                    <Typography variant="body1" sx={{ color: '#555', border: '1px solid #333', py: 1, px: 3, borderRadius: 5 }}>
+                        Character Sheet Builder
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="body1" sx={{ color: '#555', border: '1px solid #333', py: 1, px: 3, borderRadius: 5 }}>
+                        Homebrew Monster Creator
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="body1" sx={{ color: '#555', border: '1px solid #333', py: 1, px: 3, borderRadius: 5 }}>
+                        Dice Roller
+                    </Typography>
+                </Grid>
+            </Grid>
+        </Container>
+      </Box>
+
+      {/* 5. FOOTER */}
+      <Box sx={{ py: 4, bgcolor: '#0f0518', textAlign: 'center', borderTop: '1px solid #333' }}>
+        <Typography variant="body2" sx={{ color: '#555' }}>
+            Capstone Project by Rene Luna | Daggerheart Campaign Vault
+        </Typography>
+      </Box>
     </Box>
   );
 }
