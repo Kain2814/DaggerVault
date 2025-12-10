@@ -1,66 +1,88 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // <--- NEW: Start as loading
+  
+  // Dynamic URL based on environment
+  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-    const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    const API_URL = `${BASE_URL}/api/campaigns`;
-
-    // Register Function
-    const register = async (userData) => {
-        try {
-            const response = await axios.post(`${API_URL}/register`, userData);
-            setUser(response.data);
-            localStorage.setItem('user', JSON.stringify(response.data));
-            navigate('/'); // Go to home after register (might change this later)
-        } catch (error) {
-            console.error("Registration Error", error);
-            alert(error.response?.data?.message || 'Error registering');
-        }
-    };
-
-    // Login Function
-    const login = async (userData) => {
-        try {
-            const response = await axios.post(`${API_URL}/login`, userData);
-            setUser(response.data);
-            localStorage.setItem('user', JSON.stringify(response.data));
-            navigate('/'); // Go to home after login (might change to "go to account after login")
-        } catch (error) {
-            console.error("Login Error", error);
-            alert(error.response?.data?.message || 'Error logging in');
-        }
-    };
-
-    // Logout Function
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('user');
-        navigate('/login');
-    };
-
-    // Check if user is logged in on page load
-    useEffect(() => {
+  // 1. Check for logged-in user on load
+  useEffect(() => {
+    const checkUser = async () => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
+          try {
             setUser(JSON.parse(storedUser));
+          } catch (error) {
+            console.error("Failed to parse user data", error);
+            localStorage.removeItem('user'); 
+          }
         }
-    }, []);
+        setLoading(false); // <--- NEW: Done checking!
+    };
+    
+    checkUser();
+  }, []);
 
-        // Update Profile Function
-    const updateProfile = async (userData) => {
+  // 2. Register
+  const register = async (name, email, password) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/users/register`, {
+        name,
+        email,
+        password,
+      });
+      
+      if (response.data && response.data.token) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setUser(response.data);
+        return { success: true };
+      } else {
+          return { success: false, message: "Registration successful but no token received." };
+      }
+    } catch (error) {
+      console.error("Registration Error", error);
+      throw error;
+    }
+  };
+
+  // 3. Login
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/users/login`, {
+        email,
+        password,
+      });
+
+      if (response.data && response.data.token) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setUser(response.data);
+        return { success: true };
+      }
+    } catch (error) {
+      console.error("Login Error", error);
+      throw error;
+    }
+  };
+
+  // 4. Logout
+  const logout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
+  // 5. Update Profile
+  const updateProfile = async (userData) => {
     try {
         const config = {
             headers: { Authorization: `Bearer ${user.token}` }
         };
-        const response = await axios.put('http://localhost:5000/api/users/profile', userData, config);
+        const response = await axios.put(`${BASE_URL}/api/users/profile`, userData, config);
         
-        // Update local state and local storage
         setUser(response.data);
         localStorage.setItem('user', JSON.stringify(response.data));
         return { success: true };
@@ -69,15 +91,11 @@ export function AuthProvider({ children }) {
     }
   };
 
-    return (
-        <AuthContext.Provider value={{ user, register, login, logout, updateProfile  }}>
-            {children}
-        </AuthContext.Provider>
-    );
-
+  return (
+    <AuthContext.Provider value={{ user, loading, register, login, logout, updateProfile }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export const useAuth = () => useContext(AuthContext);
-
-
-

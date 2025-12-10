@@ -11,6 +11,8 @@ export function CampaignProvider({ children }) {
   const [error, setError] = useState(null);
   
   const { user } = useAuth();
+
+  // 1. DEFINE DYNAMIC URL (Local vs Cloud)
   const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const API_URL = `${BASE_URL}/api/campaigns`;
 
@@ -18,7 +20,7 @@ export function CampaignProvider({ children }) {
     headers: { Authorization: `Bearer ${user?.token}` }
   });
 
-  // 1. FETCH ALL CAMPAIGNS
+  // 2. FETCH ALL CAMPAIGNS
   const fetchCampaigns = async () => {
     if (!user) return;
     setLoading(true);
@@ -34,7 +36,7 @@ export function CampaignProvider({ children }) {
     }
   };
 
-  // 2. CREATE CAMPAIGN
+  // 3. CREATE CAMPAIGN
   const createCampaign = async (title, description) => {
     try {
       const response = await axios.post(API_URL, { title, description }, getConfig());
@@ -46,7 +48,7 @@ export function CampaignProvider({ children }) {
     }
   };
 
-  // 3. GET SINGLE CAMPAIGN DETAILS
+  // 4. GET SINGLE CAMPAIGN DETAILS
   const fetchCampaignDetails = async (id) => {
     setLoading(true);
     try {
@@ -59,42 +61,19 @@ export function CampaignProvider({ children }) {
     }
   };
 
-  // 4. UPDATE CAMPAIGN (Fixes the "not a function" error)
+  // 5. UPDATE CAMPAIGN (Fear/Hope/Desc)
   const updateCampaignData = async (id, data) => {
     try {
       const response = await axios.put(`${API_URL}/${id}`, data, getConfig());
-      setCurrentCampaign(response.data); // Update local state immediately
+      setCurrentCampaign(response.data); 
       return response.data;
     } catch (err) {
       console.error("Error updating campaign:", err);
     }
   };
 
-  useEffect(() => {
-    fetchCampaigns();
-  }, [user]);
+  // --- MONSTER FUNCTIONS ---
 
-  const deleteNote = async (noteId) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/campaigns/notes/${noteId}`, getConfig());
-      return true;
-    } catch (err) {
-      console.error("Error deleting note:", err);
-      return false;
-    }
-  };
-
-  const updateNote = async (noteId, data) => {
-    try {
-      await axios.put(`http://localhost:5000/api/campaigns/notes/${noteId}`, data, getConfig());
-      return true;
-    } catch (err) {
-      console.error("Error updating note:", err);
-      return false;
-    }
-  };
-
-  // 5. SAVE MONSTER TO CAMPAIGN
   const saveMonsterToCampaign = async (campaignId, monsterData) => {
     try {
       await axios.post(`${API_URL}/${campaignId}/monsters`, monsterData, getConfig());
@@ -104,7 +83,6 @@ export function CampaignProvider({ children }) {
     }
   };
 
-  // 6. GET CAMPAIGN MONSTERS
   const fetchCampaignMonsters = async (campaignId) => {
     try {
       const response = await axios.get(`${API_URL}/${campaignId}/monsters`, getConfig());
@@ -115,10 +93,10 @@ export function CampaignProvider({ children }) {
     }
   };
 
-  // 7. DELETE CAMPAIGN MONSTER
+  // FIXED: Now uses API_URL instead of localhost
   const deleteCampaignMonster = async (monsterId) => {
       try {
-          await axios.delete(`http://localhost:5000/api/campaigns/monsters/${monsterId}`, getConfig());
+          await axios.delete(`${API_URL}/monsters/${monsterId}`, getConfig());
           return true;
       } catch (err) {
           console.error("Error deleting monster", err);
@@ -126,15 +104,50 @@ export function CampaignProvider({ children }) {
       }
   };
 
+  // --- NOTE FUNCTIONS ---
+
+  const deleteNote = async (noteId) => {
+    try {
+      await axios.delete(`${API_URL}/notes/${noteId}`, getConfig());
+      return true;
+    } catch (err) {
+      console.error("Error deleting note:", err);
+      return false;
+    }
+  };
+
+  const updateNote = async (noteId, data) => {
+    try {
+      await axios.put(`${API_URL}/notes/${noteId}`, data, getConfig());
+      return true;
+    } catch (err) {
+      console.error("Error updating note:", err);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, [user]);
+
   return (
     <CampaignContext.Provider value={{ 
-      campaigns, currentCampaign, loading, error, 
-      createCampaign, fetchCampaignDetails, updateCampaignData,
-      deleteNote, updateNote,
-      saveMonsterToCampaign, fetchCampaignMonsters, deleteCampaignMonster // <--- Export
+      campaigns, 
+      currentCampaign, 
+      loading, 
+      error, 
+      createCampaign, 
+      fetchCampaignDetails,
+      updateCampaignData,
+      saveMonsterToCampaign,
+      fetchCampaignMonsters,
+      deleteCampaignMonster,
+      deleteNote, 
+      updateNote
     }}>
       {children}
     </CampaignContext.Provider>
   );
 }
+
 export const useCampaigns = () => useContext(CampaignContext);

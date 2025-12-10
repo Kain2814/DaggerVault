@@ -6,109 +6,76 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import BackgroundImg from '../assets/daggerheart_background.jpg'; 
 
-// --- STATIC DATA (Extracted from Core Rulebook) ---
+// --- ART ASSETS ---
+import GuardianImg from '../assets/Guardian_drag.png';
+import RangerImg from '../assets/Ranger_frog.png';
+import WizardImg from '../assets/Wizard_book.png';
+
+// --- DATA ---
 const classData = {
     guardian: {
         name: "Guardian",
-        icon: "🛡️",
-        domains: ["Valor", "Blade"],
-        tagline: "Unstoppable defenders with unshakeable fortitude.",
+        image: GuardianImg,
+        tagline: "The immovable object and the unstoppable force.",
         lore: [
-            "The title of guardian represents an array of martial professions, speaking more to their moral compass and unshakeable fortitude than the means by which they fight. While many guardians join groups of militants for either a country or cause, they're more likely to follow those few they truly care for, majority be damned.",
-            "Guardians are known for fighting with remarkable ferocity even against overwhelming odds, defending their cohort above all else. Woe betide those who harm the ally of a guardian, as the guardian will answer this injury in kind."
+            "Guardians are the heavy-hitters and protectors of Daggerheart. Whether clad in shining plate mail or toughened by strange magic, they place themselves directly in harm's way so their allies don't have to.",
+            "A Guardian's strength comes not just from their physical might, but from their conviction. They are often leaders, soldiers, or bodyguards who have sworn an oath to defend others with their lives.",
+            "On the battlefield, a Guardian is a wall of steel and muscle. They specialize in absorbing damage, controlling enemy positioning, and delivering crushing blows to those who dare threaten their charges."
         ],
-        stats: {
-            evasion: 9,
-            hp: 7,
-            items: "A totem from your mentor or a secret key"
-        },
         features: [
             {
-                title: "Hope Feature: Frontline Tank",
-                desc: "Spend 3 Hope to clear 2 Armor Slots."
+                title: "Unstoppable",
+                desc: "You can mark Stress to reduce incoming damage by an amount equal to your Armor Score."
             },
             {
-                title: "Unstoppable",
-                desc: "Once per long rest, you can become Unstoppable. You gain an Unstoppable Die (d4) that increases as you deal damage. While Unstoppable, you reduce incoming physical damage and cannot be Restrained or Vulnerable."
+                title: "Battle Hardened",
+                desc: "Gain a permanent +1 bonus to your Strength or Constitution trait (your choice at creation)."
             }
         ],
-        subclasses: "Stalwart (Resilient Tank) or Vengeance (Retaliation Striker)",
-        ideas: [
-            "A retired royal guard seeking redemption for a past failure.",
-            "A gentle giant who only fights to protect their friends.",
-            "A heavily armored mercenary who never retreats.",
-            "A tribal warrior wielding a massive shield made of stone."
-        ]
+        coreMechanic: "Armor & Stress Management"
     },
     ranger: {
         name: "Ranger",
-        icon: "🏹",
-        domains: ["Bone", "Sage"],
-        tagline: "Skilled hunters and masters of the wild.",
+        image: RangerImg,
+        tagline: "One with the wild, striking from the shadows.",
         lore: [
-            "Rangers are highly skilled hunters who, despite their martial abilities, rarely lend their skills to an army. Through mastery of the body and a deep understanding of the wilderness, rangers become sly tacticians, pursuing their quarry with cunning and patience.",
-            "Many rangers track and fight alongside an animal companion with whom they've forged a powerful spiritual bond. By honing their skills in the wild, rangers become expert trackers, as likely to ensnare their foes in a trap as they are to assail them head-on."
+            "Rangers are masters of the wilderness, surviving on the fringes of civilization where others would perish. They are trackers, hunters, and scouts who know every leaf and stone of their territory.",
+            "Often accompanied by a trusty animal companion or utilizing strange nature magic, Rangers excel at identifying threats before they arrive. They prefer to strike from a distance with a bow or close the gap with dual blades.",
+            "Their connection to the natural world grants them abilities to move unseen, speak with beasts, and navigate impossible terrain."
         ],
-        stats: {
-            evasion: 12,
-            hp: 6,
-            items: "A trophy from your first kill or a seemingly broken compass"
-        },
         features: [
             {
-                title: "Hope Feature: Hold Them Off",
-                desc: "Spend 3 Hope when you succeed on an attack with a weapon to use that same roll against two additional adversaries within range."
+                title: "Natural Tracker",
+                desc: "You have advantage on any roll related to tracking, navigating, or identifying beasts."
             },
             {
-                title: "Ranger's Focus",
-                desc: "Spend a Hope to mark a target as your Focus. You know their direction, deal extra Stress to them, and can reroll failures against them by ending the focus."
+                title: "Called Shot",
+                desc: "When attacking with a ranged weapon, you can take Stress to aim for a weak point, dealing extra damage."
             }
         ],
-        subclasses: "Beastbound (Animal Companion) or Wayfinder (Expert Hunter)",
-        ideas: [
-            "A bounty hunter who never loses a target.",
-            "A wilderness guide protecting travelers from monsters.",
-            "A beast tamer who fights alongside a loyal wolf.",
-            "A guerrilla fighter who strikes from the shadows."
-        ]
+        coreMechanic: "Tracking & Ranged Precision"
     },
     wizard: {
         name: "Wizard",
-        icon: "🔮",
-        domains: ["Codex", "Splendor"],
-        tagline: "Scholars of the arcane who wield immense power.",
+        image: WizardImg,
+        tagline: "A master of the arcane arts and forbidden knowledge.",
         lore: [
-            "Whether through an institution or individual study, those known as wizards acquire and hone immense magical power over years of learning. Some wizards dedicate their lives to mastering a particular school of magic, while others learn from a wide variety of disciplines.",
-            "Many wizards become wise and powerful figures in their communities, advising rulers or leading war councils. However, the acquisition and keeping of powerful secrets is a topic of intense debate among their ranks."
+            "Wizards have dedicated their lives to the study of magic. Through dusty tomes, ancient scrolls, and rigorous practice, they have learned to pull at the threads of reality itself.",
+            "Unlike those born with magic, a Wizard earns their power through intellect. They carry spellbooks filled with complex formulas that can summon fire, warp time, or shield their allies.",
+            "While physically less imposing than a Guardian, a Wizard controls the flow of battle. They can clear entire rooms of enemies with a single word or solve ancient puzzles that stump the strongest warriors."
         ],
-        stats: {
-            evasion: 11,
-            hp: 5,
-            items: "A book you're trying to translate or a tiny, harmless elemental pet"
-        },
         features: [
             {
-                title: "Hope Feature: Not This Time",
-                desc: "Spend 3 Hope to force an adversary within Far range to reroll an attack or damage roll."
+                title: "Spellcasting",
+                desc: "You carry a Spellbook. You can cast spells by marking Stress or using Hope."
             },
             {
-                title: "Prestidigitation",
-                desc: "You can perform harmless, subtle magical effects at will (lighting candles, cleaning objects, etc)."
-            },
-            {
-                title: "Strange Patterns",
-                desc: "Choose a number between 1 and 12. When you roll that number on a Duality Die, gain a Hope or clear a Stress."
+                title: "Arcane Knowledge",
+                desc: "You have advantage on checks related to history, magic theory, or deciphering runes."
             }
         ],
-        subclasses: "School of Knowledge (Utility & Lore) or School of War (Battle Magic)",
-        ideas: [
-            "An eccentric researcher obsessed with ancient ruins.",
-            "A war mage who served in a legendary legion.",
-            "A hedge wizard who learned magic from folklore and spirits.",
-            "A prodigy struggling to control their overwhelming power."
-        ]
+        coreMechanic: "Spellcasting & Knowledge"
     }
 };
 
@@ -126,52 +93,38 @@ function ClassDetail() {
   }
 
   return (
-    <Box 
-      sx={{ 
-        minHeight: '100vh', 
-        pb: 12,
-        backgroundImage: `linear-gradient(to bottom, rgba(15, 5, 24, 0.95), rgba(15, 5, 24, 0.9)), url(${BackgroundImg})`,
-        backgroundSize: 'cover',
-        backgroundAttachment: 'fixed',
-        color: 'white'
-      }}
-    >
-      {/* HEADER IMAGE PLACEHOLDER */}
+    <Box sx={{ minHeight: '100vh', pb: 12, bgcolor: '#0f0518', color: 'white' }}>
+      
+      {/* 1. HERO BANNER */}
       <Box sx={{ 
-          height: '40vh', 
-          bgcolor: 'rgba(0,0,0,0.5)', 
+          height: '50vh', 
+          width: '100%',
+          backgroundImage: `linear-gradient(to bottom, rgba(15, 5, 24, 0.2), rgba(15, 5, 24, 1)), url(${data.image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 20%', 
           display: 'flex', 
-          alignItems: 'center', 
+          alignItems: 'flex-end', 
           justifyContent: 'center',
-          borderBottom: '4px solid #d4af37',
-          position: 'relative',
-          overflow: 'hidden'
+          pb: 6
       }}>
-          <Typography variant="h1" sx={{ fontSize: '15rem', opacity: 0.1, position: 'absolute' }}>
-              {data.icon}
-          </Typography>
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-            <Button startIcon={<ArrowBackIcon />} component={RouterLink} to="/classes" sx={{ color: '#b39ddb', mb: 2 }}>
-                Back to Selection
-            </Button>
-            <Typography variant="h1" sx={{ fontFamily: 'Cinzel', color: '#d4af37', textShadow: '0 0 20px black' }}>
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+            <Typography variant="h1" sx={{ fontFamily: 'Cinzel', color: '#d4af37', textShadow: '0 0 30px rgba(0,0,0,0.8), 0 0 10px black' }}>
                 {data.name}
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                {data.domains.map(domain => (
-                    <Chip key={domain} label={domain} sx={{ bgcolor: '#5e35b1', color: 'white', fontWeight: 'bold' }} />
-                ))}
-            </Box>
-            <Typography variant="h4" sx={{ fontWeight: 300, color: '#e0e0e0', maxWidth: '800px' }}>
+            <Typography variant="h4" sx={{ fontWeight: 300, color: '#e0e0e0', maxWidth: '800px', mx: 'auto', textShadow: '0 2px 5px black' }}>
                 {data.tagline}
             </Typography>
+            <Button startIcon={<ArrowBackIcon />} component={RouterLink} to="/classes" sx={{ color: '#b39ddb', mt: 3 }}>
+                Back to Selection
+            </Button>
           </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
+      {/* 2. CONTENT */}
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Grid container spacing={6}>
             
-            {/* LEFT COL: LORE & BIO */}
+            {/* LEFT COL: LORE */}
             <Grid size={{ xs: 12, md: 8 }}>
                 <Paper sx={{ p: 4, bgcolor: 'rgba(30, 10, 40, 0.6)', border: '1px solid #5e35b1' }}>
                     <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>
@@ -184,61 +137,19 @@ function ClassDetail() {
                             {paragraph}
                         </Typography>
                     ))}
-
-                    <Box sx={{ mt: 4, p: 3, bgcolor: 'rgba(0,0,0,0.3)', borderRadius: 2, borderLeft: '4px solid #d4af37' }}>
-                        <Typography variant="h6" sx={{ color: '#d4af37', fontFamily: 'Cinzel' }}>Starting Stats</Typography>
-                        <Typography variant="body1" sx={{ color: '#ccc' }}><strong>Evasion:</strong> {data.stats.evasion}</Typography>
-                        <Typography variant="body1" sx={{ color: '#ccc' }}><strong>Hit Points:</strong> {data.stats.hp}</Typography>
-                        <Typography variant="body1" sx={{ color: '#ccc' }}><strong>Class Items:</strong> {data.stats.items}</Typography>
-                    </Box>
                 </Paper>
-
-                {/* IDEAS SECTION (Bottom) */}
-                <Box sx={{ mt: 6 }}>
-                    <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>
-                        Ideas for your {data.name}
-                    </Typography>
-                    <Grid container spacing={4} alignItems="center">
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Paper sx={{ 
-                                height: 300, 
-                                bgcolor: 'rgba(0,0,0,0.3)', 
-                                border: '1px dashed #777',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center'
-                            }}>
-                                <Typography sx={{ color: '#777' }}>[Concept Art Placeholder]</Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Stack spacing={2}>
-                                {data.ideas.map((idea, i) => (
-                                    <Chip key={i} label={idea} sx={{ bgcolor: 'rgba(212, 175, 55, 0.1)', color: '#d4af37', justifyContent: 'flex-start', p: 1 }} />
-                                ))}
-                            </Stack>
-                            <Box sx={{ mt: 4, p: 2, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: 2 }}>
-                                <Typography variant="h6" sx={{ color: '#b39ddb' }}>Subclasses</Typography>
-                                <Typography variant="body2" sx={{ color: '#aaa' }}>
-                                    {data.subclasses}
-                                </Typography>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
             </Grid>
 
-            {/* RIGHT COL: FEATURES CARD */}
+            {/* RIGHT COL: FEATURES */}
             <Grid size={{ xs: 12, md: 4 }}>
                 <Card sx={{ bgcolor: '#1a0924', border: '2px solid #d4af37', position: 'sticky', top: 100 }}>
                     <CardContent>
-                        <Box sx={{ textAlign: 'center', mb: 3 }}>
-                            <Typography variant="h2">{data.icon}</Typography>
-                            <Typography variant="h5" sx={{ fontFamily: 'Cinzel', color: '#d4af37' }}>Class Features</Typography>
-                        </Box>
+                        <Typography variant="h5" align="center" sx={{ fontFamily: 'Cinzel', color: '#d4af37', mb: 3 }}>Core Traits</Typography>
 
                         <Stack spacing={3}>
                             {data.features.map((feature, i) => (
                                 <Box key={i}>
-                                    <Typography variant="h6" sx={{ color: '#fff', fontWeight: 'bold', fontSize: '1rem' }}>
+                                    <Typography variant="h6" sx={{ color: '#fff', fontWeight: 'bold' }}>
                                         {feature.title}
                                     </Typography>
                                     <Typography variant="body2" sx={{ color: '#b0bec5', lineHeight: 1.6 }}>
@@ -248,11 +159,10 @@ function ClassDetail() {
                             ))}
                         </Stack>
 
-                        <Divider sx={{ my: 3, bgcolor: '#555' }} />
-                        
-                        <Button fullWidth variant="contained" sx={{ bgcolor: '#d4af37', color: 'black', fontWeight: 'bold' }}>
-                            Start Character
-                        </Button>
+                        <Box sx={{ mt: 4, p: 2, bgcolor: 'rgba(94, 53, 177, 0.1)', borderRadius: 2 }}>
+                             <Typography variant="subtitle2" sx={{ color: '#b39ddb' }}>Primary Mechanic:</Typography>
+                             <Typography variant="caption" sx={{ color: '#aaa', fontSize: '0.9rem' }}>{data.coreMechanic}</Typography>
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>

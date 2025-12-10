@@ -4,15 +4,19 @@ import {
   Container, Typography, Box, Card, CardContent, 
   Chip, Button, Divider, Paper, Stack 
 } from '@mui/material';
-import Grid from '@mui/material/Grid'; // MUI v6 standard import
+import Grid from '@mui/material/Grid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import BackgroundImg from '../assets/daggerheart_background.jpg'; 
 
-// --- STATIC DATA (Extracted from Core Rulebook) ---
+// --- ART ASSETS ---
+import ClankImg from '../assets/Clank.png';
+import GalapaImg from '../assets/Galapa.png';
+import SimiahImg from '../assets/Simiah.png';
+
+// --- STATIC DATA ---
 const ancestryData = {
     clank: {
         name: "Clank",
-        icon: "⚙️",
+        image: ClankImg, // <--- New Image Field
         tagline: "Sentient mechanical beings built from wood, metal, and stone.",
         lore: [
             "Clanks are sentient mechanical beings built from a variety of materials, including metal, wood, and stone. They can resemble humanoids, animals, or even inanimate objects. Like organic beings, their bodies come in a wide array of sizes.",
@@ -39,7 +43,7 @@ const ancestryData = {
     },
     galapa: {
         name: "Galapa",
-        icon: "🐢",
+        image: GalapaImg,
         tagline: "Resilient wanderers who carry their protection with them.",
         lore: [
             "Galapa resemble anthropomorphic turtles with large, domed shells into which they can retract. On average, they range from 4 to 6 feet in height. Galapa come in a variety of earth tones—most often shades of green and brown—and possess unique patterns on their shells.",
@@ -66,7 +70,7 @@ const ancestryData = {
     },
     simiah: {
         name: "Simiah",
-        icon: "🐒",
+        image: SimiahImg,
         tagline: "Agile climbers with dexterous feet and unmatched mobility.",
         lore: [
             "Simiah resemble anthropomorphic monkeys and apes with long limbs and prehensile feet. While their appearance reflects all simian creatures, from the largest gorilla to the smallest marmoset, their size ranges anywhere from 2 to 6 feet tall.",
@@ -90,33 +94,6 @@ const ancestryData = {
             "A powerful gorilla-like warrior who fights with bare knuckles."
         ],
         mixedAncestry: "Try a Simiah-Faerie (Flying Monkey) or Simiah-Katari (Ultimate Agility)."
-    },
-    human: {
-        name: "Human",
-        icon: "🤝",
-        tagline: "Adaptable wanderers defined by their endurance and ambition.",
-        lore: [
-            "Humans are most easily recognized by their dexterous hands, rounded ears, and bodies built for endurance. Their average height ranges from just under 5 feet to about 6 ½ feet.",
-            "They have a wide variety of builds, with some being quite broad, others lithe, and many inhabiting the spectrum in between. Humans are physically adaptable and adjust to harsh climates with relative ease.",
-            "In general, humans live to an age of about 100, with their bodies changing dramatically between their youngest and oldest years."
-        ],
-        features: [
-            {
-                title: "High Stamina",
-                desc: "Gain an additional Stress slot at character creation."
-            },
-            {
-                title: "Adaptability",
-                desc: "When you fail a roll that utilized one of your Experiences, you can mark a Stress to reroll."
-            }
-        ],
-        ideas: [
-            "A diplomat navigating the complex politics of the realms.",
-            "A stubborn survivor who refuses to stay down.",
-            "A jack-of-all-trades adventurer seeking glory.",
-            "A battle-hardened veteran of many wars."
-        ],
-        mixedAncestry: "Humans are the most common basis for mixed ancestries. Try a Human-Elf (Half-Elf) or Human-Orc."
     }
 };
 
@@ -134,47 +111,37 @@ function AncestryDetail() {
   }
 
   return (
-    <Box 
-      sx={{ 
-        minHeight: '100vh', 
-        pb: 12,
-        backgroundImage: `linear-gradient(to bottom, rgba(15, 5, 24, 0.95), rgba(15, 5, 24, 0.9)), url(${BackgroundImg})`,
-        backgroundSize: 'cover',
-        backgroundAttachment: 'fixed',
-        color: 'white'
-      }}
-    >
-      {/* HEADER IMAGE PLACEHOLDER */}
+    <Box sx={{ minHeight: '100vh', pb: 12, bgcolor: '#0f0518', color: 'white' }}>
+      
+      {/* 1. HEADER IMAGE (Using the official art) */}
       <Box sx={{ 
-          height: '40vh', 
-          bgcolor: 'rgba(0,0,0,0.5)', 
+          height: '50vh', 
+          width: '100%',
+          backgroundImage: `linear-gradient(to bottom, rgba(15, 5, 24, 0.2), rgba(15, 5, 24, 1)), url(${data.image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 20%', // Centers the face usually
           display: 'flex', 
-          alignItems: 'center', 
+          alignItems: 'flex-end', 
           justifyContent: 'center',
-          borderBottom: '4px solid #d4af37',
-          position: 'relative',
-          overflow: 'hidden'
+          pb: 6
       }}>
-          <Typography variant="h1" sx={{ fontSize: '15rem', opacity: 0.1, position: 'absolute' }}>
-              {data.icon}
-          </Typography>
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-            <Button startIcon={<ArrowBackIcon />} component={RouterLink} to="/ancestries" sx={{ color: '#b39ddb', mb: 2 }}>
-                Back to Selection
-            </Button>
-            <Typography variant="h1" sx={{ fontFamily: 'Cinzel', color: '#d4af37', textShadow: '0 0 20px black' }}>
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+            <Typography variant="h1" sx={{ fontFamily: 'Cinzel', color: '#d4af37', textShadow: '0 0 30px rgba(0,0,0,0.8), 0 0 10px black' }}>
                 {data.name}
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 300, color: '#e0e0e0', maxWidth: '800px' }}>
+            <Typography variant="h4" sx={{ fontWeight: 300, color: '#e0e0e0', maxWidth: '800px', mx: 'auto', textShadow: '0 2px 5px black' }}>
                 {data.tagline}
             </Typography>
+            <Button startIcon={<ArrowBackIcon />} component={RouterLink} to="/ancestries" sx={{ color: '#b39ddb', mt: 3 }}>
+                Back to Selection
+            </Button>
           </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Grid container spacing={6}>
             
-            {/* LEFT COL: LORE & BIO */}
+            {/* LEFT COL: LORE */}
             <Grid size={{ xs: 12, md: 8 }}>
                 <Paper sx={{ p: 4, bgcolor: 'rgba(30, 10, 40, 0.6)', border: '1px solid #5e35b1' }}>
                     <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>
@@ -189,49 +156,28 @@ function AncestryDetail() {
                     ))}
                 </Paper>
 
-                {/* IDEAS SECTION (Bottom) */}
+                {/* IDEAS SECTION */}
                 <Box sx={{ mt: 6 }}>
                     <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Cinzel', color: '#fff' }}>
-                        Ideas for your {data.name}
+                        Character Concepts
                     </Typography>
-                    <Grid container spacing={4} alignItems="center">
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Paper sx={{ 
-                                height: 300, 
-                                bgcolor: 'rgba(0,0,0,0.3)', 
-                                border: '1px dashed #777',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center'
-                            }}>
-                                <Typography sx={{ color: '#777' }}>[Concept Art Placeholder]</Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <Stack spacing={2}>
-                                {data.ideas.map((idea, i) => (
-                                    <Chip key={i} label={idea} sx={{ bgcolor: 'rgba(212, 175, 55, 0.1)', color: '#d4af37', justifyContent: 'flex-start', p: 1 }} />
-                                ))}
-                            </Stack>
-                            <Box sx={{ mt: 4, p: 2, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: 2 }}>
-                                <Typography variant="h6" sx={{ color: '#b39ddb' }}>Mixed Ancestry?</Typography>
-                                <Typography variant="body2" sx={{ color: '#aaa' }}>
-                                    {data.mixedAncestry}
-                                    <br/>
-                                    <em>(Rules: Choose one feature from each parent ancestry.)</em>
-                                </Typography>
-                            </Box>
-                        </Grid>
+                    <Grid container spacing={4}>
+                        {data.ideas.map((idea, i) => (
+                             <Grid size={{ xs: 12, sm: 6 }} key={i}>
+                                <Paper sx={{ p: 2, bgcolor: 'rgba(255,255,255,0.05)', borderLeft: '4px solid #d4af37' }}>
+                                    <Typography variant="body1" sx={{ color: '#e0e0e0' }}>{idea}</Typography>
+                                </Paper>
+                             </Grid>
+                        ))}
                     </Grid>
                 </Box>
             </Grid>
 
-            {/* RIGHT COL: STATS & FEATURES CARD */}
+            {/* RIGHT COL: STATS & FEATURES */}
             <Grid size={{ xs: 12, md: 4 }}>
                 <Card sx={{ bgcolor: '#1a0924', border: '2px solid #d4af37', position: 'sticky', top: 100 }}>
                     <CardContent>
-                        <Box sx={{ textAlign: 'center', mb: 3 }}>
-                            <Typography variant="h2">{data.icon}</Typography>
-                            <Typography variant="h5" sx={{ fontFamily: 'Cinzel', color: '#d4af37' }}>Ancestry Features</Typography>
-                        </Box>
+                        <Typography variant="h5" align="center" sx={{ fontFamily: 'Cinzel', color: '#d4af37', mb: 3 }}>Ancestry Features</Typography>
 
                         <Stack spacing={3}>
                             {data.features.map((feature, i) => (
@@ -246,11 +192,10 @@ function AncestryDetail() {
                             ))}
                         </Stack>
 
-                        <Divider sx={{ my: 3, bgcolor: '#555' }} />
-                        
-                        <Button fullWidth variant="contained" sx={{ bgcolor: '#d4af37', color: 'black', fontWeight: 'bold' }}>
-                            Add to Character
-                        </Button>
+                        <Box sx={{ mt: 4, p: 2, bgcolor: 'rgba(94, 53, 177, 0.1)', borderRadius: 2 }}>
+                             <Typography variant="subtitle2" sx={{ color: '#b39ddb' }}>Mixed Ancestry Tip:</Typography>
+                             <Typography variant="caption" sx={{ color: '#aaa' }}>{data.mixedAncestry}</Typography>
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>
