@@ -9,26 +9,74 @@ import GuardianImg from '../assets/Guardian_drag.png';
 import RangerImg from '../assets/Ranger_frog.png';
 import WizardImg from '../assets/Wizard_book.png';
 
+// Placeholder
+const PlaceholderImg = BackgroundImg;
+
 function ClassList() {
   
   const classes = [
     { 
+        name: "Bard", 
+        image: PlaceholderImg, 
+        domain: "Codex & Splendor", 
+        desc: "Weavers of magic and song who inspire allies and manipulate foes.",
+        tags: ["Support", "Social"]
+    },
+    { 
+        name: "Druid", 
+        image: PlaceholderImg, 
+        domain: "Sage & Arcana", 
+        desc: "Guardians of nature who shape-shift and command the elements.",
+        tags: ["Shape-shift", "Nature"]
+    },
+    { 
         name: "Guardian", 
         image: GuardianImg, 
-        desc: "Unstoppable armored protectors who stand between their allies and danger. They use strength and conviction to weather any blow.", 
-        tags: ["Tank", "Protection"] 
+        domain: "Valor & Blade", 
+        desc: "Unstoppable defenders who protect their allies from harm.",
+        tags: ["Tank", "Defender"]
     },
     { 
         name: "Ranger", 
         image: RangerImg, 
-        desc: "Masters of the wild who track prey and strike from a distance. They are adaptable hunters at home in nature's harshest environments.", 
-        tags: ["Survival", "Ranged"] 
+        domain: "Bone & Sage", 
+        desc: "Trackers and hunters who strike from the shadows or distance.",
+        tags: ["Tracker", "Companion"]
+    },
+    { 
+        name: "Rogue", 
+        image: PlaceholderImg, 
+        domain: "Midnight & Grace", 
+        desc: "Masters of stealth and precision who exploit every weakness.",
+        tags: ["Stealth", "Trickery"]
+    },
+    { 
+        name: "Seraph", 
+        image: PlaceholderImg, 
+        domain: "Splendor & Valor", 
+        desc: "Winged warriors channeling divine power to smite and heal.",
+        tags: ["Flying", "Divine"]
+    },
+    { 
+        name: "Sorcerer", 
+        image: PlaceholderImg, 
+        domain: "Arcana & Midnight", 
+        desc: "Conduits of raw, chaotic magic that transforms the battlefield.",
+        tags: ["Magic", "Blaster"]
+    },
+    { 
+        name: "Warrior", 
+        image: PlaceholderImg, 
+        domain: "Blade & Bone", 
+        desc: "Masters of tactics and weapons, dominating close quarters combat.",
+        tags: ["Melee", "Tactics"]
     },
     { 
         name: "Wizard", 
         image: WizardImg, 
-        desc: "Scholars of the arcane who shape reality with powerful spells. Their knowledge of magic allows them to control the battlefield.", 
-        tags: ["Magic", "Intelligence"] 
+        domain: "Codex & Arcana", 
+        desc: "Scholars of the arcane who bend reality with learned spells.",
+        tags: ["Utility", "Spells"]
     }
   ];
 
@@ -73,15 +121,12 @@ function ClassList() {
                     transform: 'translateY(-5px)',
                     boxShadow: '0 0 25px rgba(212, 175, 55, 0.3)'
                   },
-                  // ON HOVER: Shrink image height
                   '&:hover .class-img': {
                     height: '40%' 
                   },
-                  // ON HOVER: Hide Title Overlay
                   '&:hover .title-overlay': {
                     opacity: 0
                   },
-                  // ON HOVER: Show content box
                   '&:hover .content-box': {
                     height: '60%',
                     opacity: 1,
